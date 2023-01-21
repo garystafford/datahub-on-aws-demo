@@ -1,15 +1,22 @@
 source:
-  type: bigquery-usage
+  type: bigquery
   config:
     # Coordinates
-    projects:
-      - ${GOOGLE_PROJECT_ID}
+    project_id: ${GOOGLE_PROJECT_ID}
+
+    schema_pattern:
+      allow:
+        - moma
+        - tickit
+        - synthea
 
     # Environment
     env: PROD
 
     # Options
-    top_n_queries: 10
+    profiling:
+      enabled: true
+#      turn_off_expensive_profiling_metrics: true
 
 transformers:
   - type: "simple_add_dataset_tags"
