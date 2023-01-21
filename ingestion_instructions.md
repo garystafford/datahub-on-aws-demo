@@ -85,25 +85,25 @@ env | sort
 curl "http://${DATAHUB_DATAHUB_GMS_SERVICE_HOST}:${DATAHUB_DATAHUB_GMS_SERVICE_PORT}/config"
 
 # ingest metadata
-datahub ingest -c athena_synthea.yml
-datahub ingest -c athena_tickit.yml
-datahub ingest -c glue_data_catalog.yml
-datahub ingest -c msk_kafka.yml
-datahub ingest -c aurora_postgres_tickit.yml
-datahub ingest -c rds_mysql_tickit.yml
-datahub ingest -c rds_mssql_tickit.yml
-datahub ingest -c rds_postgres_moma.yml
-datahub ingest -c rds_postgres_pagila.yml
-datahub ingest -c rds_postgres_tickit.yml
-datahub ingest -c redshift_provisioned_dev.yml
-datahub ingest -c redshift_serverless_demo.yml
-datahub ingest -c redshift_usage_provisioned_dev.yml
+datahub ingest -c athena_synthea.dhub.yaml
+datahub ingest -c athena_tickit.dhub.yaml
+datahub ingest -c glue_data_catalog.dhub.yaml
+datahub ingest -c msk_kafka.dhub.yaml
+datahub ingest -c aurora_postgres_tickit.dhub.yaml
+datahub ingest -c rds_mysql_tickit.dhub.yaml
+datahub ingest -c rds_mssql_tickit.dhub.yaml
+datahub ingest -c rds_postgres_moma.dhub.yaml
+datahub ingest -c rds_postgres_pagila.dhub.yaml
+datahub ingest -c rds_postgres_tickit.dhub.yaml
+datahub ingest -c redshift_provisioned_dev.dhub.yaml
+datahub ingest -c redshift_serverless_demo.dhub.yaml
+datahub ingest -c redshift_usage_provisioned_dev.dhub.yaml
 # permission denied for relation stl_insert < no table in serverless - does not work with serverless
-#datahub ingest -c redshift_usage_serverless_demo.yml
-datahub ingest -c google_bigquery.yml
+#datahub ingest -c redshift_usage_serverless_demo.dhub.yaml
+datahub ingest -c google_bigquery.dhub.yaml
 datahub ingest -c snowflake.yaml
-datahub ingest -c dbt_redshift_tickit.yml
+datahub ingest -c dbt_redshift_tickit.dhub.yaml
 
 # ingest glossary
-datahub ingest -c business_glossary_to_datahub_rest.yml
+datahub ingest -c business_glossary_to_datahub_rest.dhub.yaml
 ```
