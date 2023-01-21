@@ -1,6 +1,6 @@
-# DataHub on AWS Demonstration Resources
+# DataHub on AWS Demonstration
 
-Details to come...
+Source files for the upcoming DataHub on AWS video and blog post.
 
 ---
 The contents of this repository represent my viewpoints and not of my past or current employers, including Amazon Web Services (AWS). All third-party libraries, modules, plugins, and SDKs are the property of their respective owners.
