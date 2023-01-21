@@ -1,0 +1,30 @@
+source:
+  type: bigquery-usage
+  config:
+    # Coordinates
+    projects:
+      - ${GOOGLE_PROJECT_ID}
+
+    # Environment
+    env: PROD
+
+    # Options
+    top_n_queries: 10
+
+transformers:
+  - type: "simple_add_dataset_tags"
+    config:
+      tag_urns:
+        - "urn:li:tag:Google Cloud"
+        - "urn:li:tag:Google BigQuery"
+        - "urn:li:tag:us-east-1 (South Carolina)"
+  - type: "simple_add_dataset_ownership"
+    config:
+      owner_urns:
+        - "urn:li:corpuser:Datawarehouse Administrators"
+      ownership_type: "DATAOWNER"
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}

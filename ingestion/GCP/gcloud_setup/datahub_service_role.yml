@@ -1,0 +1,23 @@
+# https://cloud.google.com/iam/docs/creating-custom-roles#iam-custom-roles-create-gcloud
+# https://datahubproject.io/docs/metadata-ingestion/source_docs/bigquery
+title: datahub_service_role
+description: DataHub Service Role
+stage: GA
+includedPermissions:
+  - bigquery.datasets.get
+  - bigquery.datasets.getIamPolicy
+  - bigquery.jobs.create
+  - bigquery.jobs.list
+  - bigquery.jobs.listAll
+  - bigquery.models.getMetadata
+  - bigquery.models.list
+  - bigquery.routines.get
+  - bigquery.routines.list
+  - bigquery.tables.create # Needs for profiling
+  - bigquery.tables.get
+  - bigquery.tables.getData # Needs for profiling
+  - bigquery.tables.list
+  - logging.logEntries.list # Needs for lineage generation
+  - resourcemanager.projects.get
+  - bigquery.readsessions.create
+  - bigquery.readsessions.getData

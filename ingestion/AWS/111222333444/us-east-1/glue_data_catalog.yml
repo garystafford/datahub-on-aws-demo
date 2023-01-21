@@ -1,0 +1,37 @@
+source:
+  type: glue
+  config:
+    aws_region: ${AWS_REGION}
+    database_pattern:
+      allow:
+        - "synthea_patient_big_data"
+        - "tickit_dbt"
+      deny:
+        - "."
+
+    # Environment
+    env: DEV
+
+transformers:
+  - type: "simple_add_dataset_tags"
+    config:
+      tag_urns:
+        - "urn:li:tag:AWS"
+        - "urn:li:tag:AWS Glue Data Catalog"
+        - "urn:li:tag:${ACCOUNT_ID}"
+        - "urn:li:tag:${AWS_REGION}"
+  - type: "simple_add_dataset_ownership"
+    config:
+      owner_urns:
+        - "urn:li:corpuser:Data Engineering"
+      ownership_type: "DATAOWNER"
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}
+
+pipeline_name: "glue-pipeline-tickit"
+
+reporting:
+  - type: "datahub" # Required

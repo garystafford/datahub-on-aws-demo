@@ -1,0 +1,40 @@
+source:
+  type: "kafka"
+  config:
+    connection:
+      bootstrap: ${KAFKA_BROKERS}
+      consumer_config:
+        security.protocol: "SASL_SSL"
+        sasl.mechanism: "SCRAM-SHA-512"
+        sasl.username: ${KAFKA_SASL_USERNAME}
+        sasl.password: ${KAFKA_SASL_PASSWORD}
+        #        sasl.mechanism: "AWS_MSK_IAM"
+        #        sasl.jaas.config: "software.amazon.msk.auth.iam.IAMLoginModule required;"
+        #        sasl.client.callback.handler.class: "software.amazon.msk.auth.iam.IAMClientCallbackHandler"
+
+    # Environment
+    env: DEV
+
+transformers:
+  - type: "simple_add_dataset_tags"
+    config:
+      tag_urns:
+        - "urn:li:tag:AWS"
+        - "urn:li:tag:Amazon Managed Streaming for Apache Kafka (Amazon MSK)"
+        - "urn:li:tag:${ACCOUNT_ID}"
+        - "urn:li:tag:${AWS_REGION}"
+  - type: "simple_add_dataset_ownership"
+    config:
+      owner_urns:
+        - "urn:li:corpuser:Data Engineering"
+      ownership_type: "DATAOWNER"
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}
+
+pipeline_name: "mks-kafka-pipeline-tickit"
+
+reporting:
+  - type: "datahub" # Required

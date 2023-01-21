@@ -1,0 +1,44 @@
+source:
+  type: mongodb
+  config:
+    # Coordinates
+    connect_uri: ${MONGODB_CONNECTION_URI}
+
+    # Credentials
+    username: ${MONGODB_USERNAME}
+    password: ${MONGODB_PASSWORD}
+    authMechanism: "DEFAULT"
+
+    # Options
+    enableSchemaInference: True
+    useRandomSampling: True
+    maxSchemaSize: 300
+
+    # Environment
+    env: DEV
+
+transformers:
+  - type: "simple_add_dataset_tags"
+    config:
+      tag_urns:
+        - "urn:li:tag:MongoDB Atlas"
+        - "urn:li:tag:AWS"
+        - "urn:li:tag:us-east-1"
+  - type: "simple_add_dataset_ownership"
+    config:
+      owner_urns:
+        - "urn:li:corpuser:Database Administrators"
+      ownership_type: "DATAOWNER"
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}
+
+pipeline_name: "postgres-pipeline-pagila"
+
+reporting:
+  - type: "datahub" # Required
+    config: # Optional.
+      datahub_api: # default value
+        server: ${DATAHUB_REST_ENDPOINT}

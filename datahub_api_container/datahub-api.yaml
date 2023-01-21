@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datahub-api
+spec:
+  selector:
+    matchLabels:
+      app: datahub-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: datahub-api
+    spec:
+      containers:
+        - name: datahub-api
+          image: python:3.10.9
+          command:
+            - "/bin/sh"
+          args:
+            - "-c"
+            - "tail -f /dev/null"
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 0
+#          resources:
+#            limits:
+#              memory: 512Mi
+#              cpu: "1"
+#            requests:
+#              memory: 256Mi
+#              cpu: "0.2"

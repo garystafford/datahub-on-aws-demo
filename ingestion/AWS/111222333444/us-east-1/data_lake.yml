@@ -1,0 +1,38 @@
+source:
+  type: s3
+  config:
+    env: "DEV"
+    path_specs:
+      - include: "s3://garystaf-movie-data/*.*"
+    profiling:
+      enabled: true
+
+    aws_config:
+      aws_region: "us-east-1"
+      aws_access_key_id: "ASIAZ23UG7Q5CKOD3WGN"
+      aws_secret_access_key: "feZRLFpz7QtAYUk65vT0Zyb0Kz8B5o3GvF3i9Z/f"
+      aws_session_token: "IQoJb3JpZ2luX2VjEFoaCXVzLWVhc3QtMSJHMEUCIQDQJ45xN6nzTSRipRq5bXRCpOyiozXDLvSWSDfcdE7txwIgIZn00kL/IoxXdVHJVmNyozEhan7Wu5kXXIqfbM+xGRoqqAMIs///////////ARADGgw2NzYxNjQyMDU2MjYiDNBYh+/L4ee/CglVNSr8AmJhLzG3aHjKW0lXeu3EB0neGGloJ/iWbJq7qWQE3+zrMr3pxX+iYs6mgLJnNizahsM8oXMFxyznJ5LjRDdxu2OuRZjN68ZQBi61/yNqe+FghtkYigwWS+m59GhG8Ad08Awf7648nMvZhN65+uumLHoD4+ygfbXVjtmjziOzAhManamNMYq7W5g696canpLK3bA+lnyVaXPj6qV4IS+FBZiDvBvr6vXnTij2vuHNlwvzClJ/MpQD8PySl/D6sztEugtHvAbpJqwD9xqWMsguttXn+uTQodk9SfIAP+xACHpt14aMrPHMuJZIqHMU1fRRcy8h8cPi1Yn29kD/dOIF0jEx0VIpHmYulNdHKYm8gMONzUMmpjToyT8kuAGbryQDmEu8+QnKuDWWafSn5b07Dbk5Ur2nPtxOWzOIiTcxPNa3INmskAqAepxpys9DIZWop8HSWMRhQwFoxWMcyXXXMVOjWScRXhyHvATNMwq9Z+nv2LKbbWKSmVWHfQ9UMOPM/Z0GOqYBuvMJf1hAi3ArIGsTPbpsoDd4fpKSK+4PlZ493UaOpJyLPdIBtqy/QEiv4QxwLsClZkf9Rm/Z71MgGQz72E/iuMNIC93ZKglWPKx+Q8W1XBuenTMS3O4F+qn6RIxElNbPtE2UwQvw7rq/IOrdJYOaWInzQCX6j6RkhYuU2JeNBap9lw3ili6hTqmpJeDRwxT4buu6Y/GWdI8Eqe5cymvaVQhuXmjigg=="
+
+transformers:
+  - type: "simple_add_dataset_tags"
+    config:
+      tag_urns:
+        - "urn:li:tag:AWS"
+        - "urn:li:tag:Amazon S3"
+        - "urn:li:tag:${ACCOUNT_ID}"
+        - "urn:li:tag:${AWS_REGION}"
+  - type: "simple_add_dataset_ownership"
+    config:
+      owner_urns:
+        - "urn:li:corpuser:Data Engineering"
+      ownership_type: "DATAOWNER"
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}
+
+pipeline_name: "data-lake-pipeline-pagila"
+
+reporting:
+  - type: "datahub" # Required

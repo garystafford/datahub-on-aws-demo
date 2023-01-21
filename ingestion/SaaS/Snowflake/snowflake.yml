@@ -1,0 +1,43 @@
+source:
+  type: snowflake
+  config:
+    # Coordinates
+    host_port: ${SNOWFLAKE_HOST_PORT}
+    warehouse: COMPUTE_WH
+    database_pattern:
+      allow:
+        - SNOWFLAKE_SAMPLE_DATA
+    # This option is recommended to be used to ingest all lineage
+    ignore_start_time_lineage: true
+
+    # Credentials
+    username: ${SNOWFLAKE_USERNAME}
+    password: ${SNOWFLAKE_PASSWORD}
+    role: ${SNOWFLAKE_ROLE}
+
+    # Environment
+    env: PROD
+
+    profiling:
+      # Change to false to disable profiling
+      enabled: true
+      # This option is recommended to reduce profiling time and costs.
+      turn_off_expensive_profiling_metrics: true
+
+transformers:
+  - type: "simple_add_dataset_tags"
+    config:
+      tag_urns:
+        - "urn:li:tag:SnowFlake"
+        - "urn:li:tag:AWS"
+        - "urn:li:tag:us-east-2"
+  - type: "simple_add_dataset_ownership"
+    config:
+      owner_urns:
+        - "urn:li:corpuser:Datawarehouse Administrators"
+      ownership_type: "DATAOWNER"
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}

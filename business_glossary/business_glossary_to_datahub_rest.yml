@@ -1,0 +1,13 @@
+# https://datahubproject.io/docs/generated/ingestion/sources/business-glossary
+# https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/examples/bootstrap_data/business_glossary.yml
+# datahub ingest -c business_glossary_to_datahub_rest.yml
+source:
+  type: datahub-business-glossary
+  config:
+    # Coordinates
+    file: business_glossary.yml
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}

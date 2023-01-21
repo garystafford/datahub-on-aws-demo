@@ -1,0 +1,45 @@
+source:
+  type: mssql
+  config:
+    # Coordinates
+    host_port: ${MSSQL_HOST_PORT}
+    database: tickit
+    platform_instance:
+    schema_pattern:
+      allow:
+        - crm
+
+    # Credentials
+    username: ${MSSQL_USERNAME}
+    password: ${MSSQL_PASSWORD}
+
+    # Options
+    profiling:
+      enabled: true
+
+    # Environment
+    env: DEV
+
+transformers:
+  - type: "simple_add_dataset_tags"
+    config:
+      tag_urns:
+        - "urn:li:tag:AWS"
+        - "urn:li:tag:Amazon RDS for SQL Server"
+        - "urn:li:tag:${ACCOUNT_ID}"
+        - "urn:li:tag:${AWS_REGION}"
+  - type: "simple_add_dataset_ownership"
+    config:
+      owner_urns:
+        - "urn:li:corpuser:Database Administrators"
+      ownership_type: "DATAOWNER"
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}
+
+pipeline_name: "rds-mssql-pipeline-crm"
+
+reporting:
+  - type: "datahub" # Required

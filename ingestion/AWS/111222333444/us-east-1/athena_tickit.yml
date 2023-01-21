@@ -1,0 +1,41 @@
+# requires athena:StartQueryExecution permissions
+source:
+  type: athena
+  config:
+    # Coordinates
+    aws_region: ${AWS_REGION}
+    work_group: primary
+    database: tickit_dbt
+
+    # Options
+    s3_staging_dir: "s3://${ATHENA_S3_BUCKET}/results"
+    profiling:
+      enabled: true
+    #      turn_off_expensive_profiling_metrics: true
+
+    # Environment
+    env: PROD
+
+transformers:
+  - type: "simple_add_dataset_tags"
+    config:
+      tag_urns:
+        - "urn:li:tag:AWS"
+        - "urn:li:tag:Amazon Athena"
+        - "urn:li:tag:${ACCOUNT_ID}"
+        - "urn:li:tag:${AWS_REGION}"
+  - type: "simple_add_dataset_ownership"
+    config:
+      owner_urns:
+        - "urn:li:corpuser:Data Engineering"
+      ownership_type: "DATAOWNER"
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}
+
+pipeline_name: "athena-pipeline-tickit"
+
+reporting:
+  - type: "datahub" # Required

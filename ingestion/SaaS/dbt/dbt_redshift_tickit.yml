@@ -1,0 +1,34 @@
+source:
+  type: dbt
+  config:
+    # Coordinates
+    # To use this as-is, set the environment variable DBT_PROJECT_ROOT to the root folder of your dbt project
+    manifest_path: "{$DBT_PROJECT_DIRECTORY}target/manifest.json"
+    catalog_path: "{$DBT_PROJECT_DIRECTORY}target/catalog.json"
+    sources_path: "{$DBT_PROJECT_DIRECTORY}target/sources.json" # optional for freshness
+#    test_results_path: "{$DBT_PROJECT_DIRECTORY}target/run_results.json" # optional for recording dbt test results after running dbt test
+
+    # Options
+    target_platform: "Amazon Redshift Serverless"
+
+    # Environment
+    env: DEV
+
+transformers:
+  - type: "simple_add_dataset_tags"
+    config:
+      tag_urns:
+        - "urn:li:tag:AWS"
+        - "urn:li:tag:dbt"
+        - "urn:li:tag:${ACCOUNT_ID}"
+        - "urn:li:tag:${AWS_REGION}"
+  - type: "simple_add_dataset_ownership"
+    config:
+      owner_urns:
+        - "urn:li:corpuser:Data Engineering"
+      ownership_type: "DATAOWNER"
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}

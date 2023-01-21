@@ -1,0 +1,68 @@
+# https://datahubproject.io/docs/generated/ingestion/sources/business-glossary
+# https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/examples/bootstrap_data/business_glossary.yml
+# datahub ingest -c business_glossary_to_datahub_rest.yml
+version: 1
+source: DataHub
+owners:
+  users:
+    - datahub
+nodes:
+  - name: Classification
+    description: A set of terms related to Data Classification
+    terms:
+      - name: Sensitive
+        description: Sensitive Data
+        custom_properties:
+          is_confidential: false
+      - name: Confidential
+        description: Confidential Data
+        custom_properties:
+          is_confidential: true
+      - name: HighlyConfidential
+        description: Highly Confidential Data
+        custom_properties:
+          is_confidential: true
+  - name: PersonalInformation
+    description: All terms related to personal information
+    owners:
+      users:
+        - datahub
+    terms:
+      - name: ID
+        description: An individual's unique identifier
+        inherits:
+          - Classification.Sensitive
+      - name: Name
+        description: An individual's Name
+        inherits:
+          - Classification.Sensitive
+      - name: DateOfBirth
+        description: An individual's date of birth
+        inherits:
+          - Classification.Sensitive
+      - name: DateOfDeath
+        description: An individual's date of death
+        inherits:
+          - Classification.Sensitive
+      - name: SSN
+        description: An individual's SSN
+        inherits:
+          - Classification.Confidential
+      - name: Driver
+        description: An individual's Driver License ID
+        inherits:
+          - Classification.Confidential
+      - name: Passport
+        description: An individual's Passport ID
+        inherits:
+          - Classification.Confidential
+      - name: Email
+        description: An individual's email address
+        inherits:
+          - Classification.Confidential
+      - name: Address
+        description: A physical address
+      - name: Gender
+        description: The gender identity of the individual
+        inherits:
+          - Classification.Sensitive

@@ -1,0 +1,50 @@
+# ALTER USER datahub_user WITH SYSLOG ACCESS UNRESTRICTED;
+source:
+  type: redshift-usage
+  config:
+    # Coordinates
+    host_port: ${REDSHIFT_HOST_PORT}
+    database: dev
+    email_domain: .*
+
+    # Credentials
+    username: ${REDSHIFT_USERNAME}
+    password: ${REDSHIFT_PASSWORD}
+
+    include_views: True # whether to include views, defaults to True
+    include_tables: True # whether to include views, defaults to True
+
+    # Environment
+    env: DEV
+
+    profiling:
+      enabled: true
+#    profile_pattern:
+#      allow:
+#      - "dev.tickit.*"
+#      deny:
+#      - "*.*.*"
+
+transformers:
+  - type: "simple_add_dataset_tags"
+    config:
+      tag_urns:
+        - "urn:li:tag:AWS"
+        - "urn:li:tag:Amazon Redshift Serverless"
+        - "urn:li:tag:${ACCOUNT_ID}"
+        - "urn:li:tag:${AWS_REGION}"
+  - type: "simple_add_dataset_ownership"
+    config:
+      owner_urns:
+        - "urn:li:corpuser:Datawarehouse Administrators"
+      ownership_type: "DATAOWNER"
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}
+
+pipeline_name: "redshift-pipeline-tickit"
+
+reporting:
+  - type: "datahub" # Required
