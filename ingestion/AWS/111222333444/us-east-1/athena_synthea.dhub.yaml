@@ -8,7 +8,7 @@ source:
     database: synthea_patient_big_data
 
     # Options
-    s3_staging_dir: "s3://${ATHENA_S3_BUCKET}/results"
+    query_result_location: "s3://${ATHENA_S3_BUCKET}/results"
     profiling:
       enabled: true
     #      turn_off_expensive_profiling_metrics: true
