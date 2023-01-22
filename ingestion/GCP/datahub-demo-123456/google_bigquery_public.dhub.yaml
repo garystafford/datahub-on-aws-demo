@@ -1,0 +1,35 @@
+source:
+  type: bigquery
+  config:
+    # Coordinates
+    project_id: bigquery-public-data
+
+    schema_pattern:
+      allow:
+        - fhir_synthea
+
+    # Environment
+    env: PROD
+
+    # Options
+    profiling:
+      enabled: true
+#      turn_off_expensive_profiling_metrics: true
+
+transformers:
+  - type: "simple_add_dataset_tags"
+    config:
+      tag_urns:
+        - "urn:li:tag:Google Cloud"
+        - "urn:li:tag:Google BigQuery"
+        - "urn:li:tag:us-east-1 (South Carolina)"
+  - type: "simple_add_dataset_ownership"
+    config:
+      owner_urns:
+        - "urn:li:corpuser:Datawarehouse Administrators"
+      ownership_type: "DATAOWNER"
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: ${DATAHUB_REST_ENDPOINT}
