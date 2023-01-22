@@ -1,6 +1,3 @@
-# https://datahubproject.io/docs/generated/ingestion/sources/business-glossary
-# https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/examples/bootstrap_data/business_glossary.yml
-# datahub ingest -c business_glossary_to_datahub.dhub.yaml
 source:
   type: datahub-business-glossary
   config:
