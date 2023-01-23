@@ -4,7 +4,6 @@ source:
     # Coordinates
     host_port: ${MSSQL_HOST_PORT}
     database: tickit
-    platform_instance:
     schema_pattern:
       allow:
         - crm
