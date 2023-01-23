@@ -1,10 +1,10 @@
 # Ingestion Instructions
 
 ```shell
-DATAHUB_API_POD=""
-kubectl cp ingestion $DATAHUB_API_POD:/root -n datahub
+DATAHUB_CLI_POD="<your_cli_pod_name"
+kubectl cp data-hub-on-aws/ $DATAHUB_CLI_POD:/root -n datahub
 
-kubectl exec -it $DATAHUB_API_POD -n datahub -- bash
+kubectl exec -it $DATAHUB_CLI_POD -n datahub -- bash
 
 cd ~/ingestion/AWS/111222333444/us-east-1/
 

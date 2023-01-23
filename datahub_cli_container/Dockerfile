@@ -11,7 +11,7 @@ RUN apt update \
     && apt update -y \
     && apt install git jq curl wget tar bash vim telnet dnsutils libsasl2-dev -y
 
-# install datahub cli/api
+# install datahub cli
 RUN pip install --upgrade pip wheel setuptools \
     && pip cache purge \
     && pip install --upgrade acryl-datahub \
@@ -19,5 +19,5 @@ RUN pip install --upgrade pip wheel setuptools \
 
 # install datahub source/sink plugins
 RUN pip install \
-    'acryl-datahub[athena, bigquery, dbt, glue, hive, kafka, mongodb, mssql, mysql, postgres, redshift, redshift-usage, s3, snowflake, great-expectations, superset]' \
+    acryl-datahub[athena, bigquery, dbt, glue, hive, kafka, mongodb, mssql, mysql, postgres, redshift, redshift-usage, s3, snowflake, great-expectations, superset] \
     && datahub check plugins

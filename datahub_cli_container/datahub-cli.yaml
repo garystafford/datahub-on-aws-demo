@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: datahub-api
+  name: datahub-cli
 spec:
   selector:
     matchLabels:
-      app: datahub-api
+      app: datahub-cli
   replicas: 1
   template:
     metadata:
       labels:
-        app: datahub-api
+        app: datahub-cli
     spec:
       containers:
-        - name: datahub-api
+        - name: datahub-cli
           image: python:3.10.9
           command:
             - "/bin/sh"
